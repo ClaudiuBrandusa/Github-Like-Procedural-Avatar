@@ -15,7 +15,7 @@ This object will auto-generate an avatar and you can save it on your bin folder 
 You can generate another image at runtime if you call Generate from generator object. This method clear the image buffer and will generate another image. 
 Do not forget to save it with an unique name otherwise it will overwrite the old image.
 
-Showcase:  
+Results:  
 ![alt text](https://github.com/ClaudiuBrandusa/Github-Like-Procedural-Avatar/blob/master/Results/Avatar.png)
 ![alt text](https://github.com/ClaudiuBrandusa/Github-Like-Procedural-Avatar/blob/master/Results/Avatar2.png)
 ![alt text](https://github.com/ClaudiuBrandusa/Github-Like-Procedural-Avatar/blob/master/Results/Avatar3.png)
