@@ -1,4 +1,4 @@
-# Github-Like-Procedural-Avatar
+# Description
 
 This project generates a procedural image avatar that resembles the github's default random avatar image.  
 The algorithm used for the generation resembles a simplified version of the Perlin noise algorithm. (source: https://en.wikipedia.org/wiki/Perlin_noise)
