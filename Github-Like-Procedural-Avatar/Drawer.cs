@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
@@ -7,9 +8,12 @@ using System.Reflection;
 namespace Github_Like_Procedural_Avatar
 {
     // This class will convert our AvatarMatrix into an image at the given width & height
-    public class Drawer
+    class Drawer
     {
+        // those colors will be used if the colors list is empty
         Color[] colors = new Color[] { Color.Red, Color.Aqua, Color.Azure, Color.Chocolate, Color.Violet, Color.Yellow, Color.Green, Color.DarkGreen, Color.Orange };
+
+        Color color; // preferred color
 
         int width;
         int height;
@@ -21,6 +25,7 @@ namespace Github_Like_Procedural_Avatar
         public Drawer(int width, int height)
         {
             random = new Random();
+            color = default(Color);
             SetResolution(width, height);
         }
 
@@ -47,8 +52,13 @@ namespace Github_Like_Procedural_Avatar
             int heightRatio = (int)height / matrix.GetLength(1);
             // We will use those ratios in order to determine the scale of a position from the matrix to the bitmap
 
+            // Choosing a color
+            if(this.color == default(Color))
+            { // then it means that we have not selected a preferred color
+                // so we will choose a random color
+                color = colors[random.Next(colors.Length)];
+            }
             // Choosing a random color
-            Color color = colors[random.Next(colors.Length)];
 
             // Writing the matrix on the bitmap
             using (Graphics graphics = Graphics.FromImage(img)) // opening the bitmap
@@ -69,6 +79,13 @@ namespace Github_Like_Procedural_Avatar
                     }
                 }
             }
+            // in the end we will assing the color with the default value in order to mark the fact that we already used the preferred color
+            color = default(Color);
+        }
+
+        public void UseColor(string hexColor)
+        {
+            color = ColorTranslator.FromHtml(hexColor);//Color.FromName(hexColor);
         }
 
         public void Save(string filename)

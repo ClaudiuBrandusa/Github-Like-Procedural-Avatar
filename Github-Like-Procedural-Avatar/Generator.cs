@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Drawing;
+using System.Text.RegularExpressions;
 using System.IO;
 
 namespace Github_Like_Procedural_Avatar
@@ -10,6 +10,7 @@ namespace Github_Like_Procedural_Avatar
         AvatarMatrix matrix; // stored matrix
         Random random; // we will use this for random values generation
         Drawer drawer; // AvatarMatrix to png converter
+        Regex hexadecimalValidator;
 
         // m - number of lines
         // n - number of columns
@@ -18,12 +19,37 @@ namespace Github_Like_Procedural_Avatar
             matrix = new AvatarMatrix(m, n);
             random = new Random();
             drawer = new Drawer(Program.width, Program.height);
-            Generate(2); // 2 gives a 50% chance of generation for every position
+
+            hexadecimalValidator = new Regex("^([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$");
         }
 
         public void SetDimensions(int width, int height)
         {
             drawer.SetResolution(width, height);
+        }
+
+        public void SetColor(string hexColor) // this one will work for one generation only, then you will have to set the preferred color again
+        {
+            // let's see if it's an empty string
+            if(string.IsNullOrEmpty(hexColor))
+            { // then we have nothing to do here
+                return;
+            }else if(hexColor.Length < 3)
+            { // then definitely it's not a hexadecimal color
+                return;
+            }
+            // we will validate the given string to be sure if it's a real hexadecimal color
+            // if the first character is # then we will slice the first pos to the last in order to ignore the first character
+            if(hexColor[0] == '#')
+            {
+                hexColor = hexColor.Substring(1);
+            }
+            if(!hexadecimalValidator.IsMatch(hexColor))
+            { // Then it's not a hex color
+                return;
+            }
+            hexColor = '#' + hexColor;
+            drawer.UseColor(hexColor);
         }
 
         // Usage: This method will generate the shape of the avatar
@@ -55,7 +81,7 @@ namespace Github_Like_Procedural_Avatar
         public void Generate()
         {
             matrix.Reset(); // Clearing the matrix
-            Generate(2);
+            Generate(2); // 2 gives a 50% chance of generation for every position
         }
 
         // Usage: This method will be used in order to save the current matrix to a png

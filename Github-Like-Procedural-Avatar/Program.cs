@@ -9,15 +9,9 @@ namespace Github_Like_Procedural_Avatar
         {
             Generator generator = new Generator(100, 100);
 
-            Stream stream = new MemoryStream();
-
-            generator.Export(stream);
-
-            generator.Save("Avatar");
             generator.Generate();
-            generator.Save("Avatar2");
-            generator.Generate();
-            generator.Save("Avatar3");
+            generator.SetColor("#eb4034"); // keep in mind that we need to set the color before we save/export, so then we can set the color after the generation
+            generator.Save("test");
         }
     }
 }
