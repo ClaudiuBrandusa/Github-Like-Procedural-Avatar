@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Drawing;
+using System.Drawing.Imaging;
+using System.IO;
 using System.Reflection;
 
 namespace Github_Like_Procedural_Avatar
@@ -19,13 +21,22 @@ namespace Github_Like_Procedural_Avatar
         public Drawer(int width, int height)
         {
             random = new Random();
-            this.width = width;
-            this.height = height;
             SetResolution(width, height);
         }
 
         public void SetResolution(int width, int height)
         {
+            if (width < 10 || width > 10000 || height < 10 || height > 10000)
+            {
+                this.width = 100;
+                this.height = 100;// default value
+            }
+            else
+            {
+                this.width = width;
+                this.height = height;
+            }
+            
             img = new Bitmap(width, height);
         }
 
@@ -63,6 +74,11 @@ namespace Github_Like_Procedural_Avatar
         public void Save(string filename)
         {
             img.Save(System.IO.Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) + "/" + filename + ".png");
+        }
+
+        public void Export(Stream stream) // exports the image in png format to a stream
+        {
+            img.Save(stream, ImageFormat.Png);
         }
     }
 }

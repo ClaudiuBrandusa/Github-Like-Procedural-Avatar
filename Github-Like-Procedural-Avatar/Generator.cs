@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Drawing;
+using System.IO;
 
 namespace Github_Like_Procedural_Avatar
 {
@@ -17,6 +19,11 @@ namespace Github_Like_Procedural_Avatar
             random = new Random();
             drawer = new Drawer(Program.width, Program.height);
             Generate(2); // 2 gives a 50% chance of generation for every position
+        }
+
+        public void SetDimensions(int width, int height)
+        {
+            drawer.SetResolution(width, height);
         }
 
         // Usage: This method will generate the shape of the avatar
@@ -56,6 +63,12 @@ namespace Github_Like_Procedural_Avatar
         {
             drawer.Write(matrix.GetArray());
             drawer.Save(filename);
+        }
+
+        public void Export(Stream stream)
+        {
+            drawer.Write(matrix.GetArray());
+            drawer.Export(stream);
         }
 
         // Usage: This method set random values for the entire column

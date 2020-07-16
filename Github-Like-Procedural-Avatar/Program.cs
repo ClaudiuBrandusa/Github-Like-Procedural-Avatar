@@ -1,4 +1,5 @@
-﻿namespace Github_Like_Procedural_Avatar
+﻿using System.IO;
+namespace Github_Like_Procedural_Avatar
 {
     class Program
     {
@@ -7,6 +8,11 @@
         static void Main(string[] args)
         {
             Generator generator = new Generator(100, 100);
+
+            Stream stream = new MemoryStream();
+
+            generator.Export(stream);
+
             generator.Save("Avatar");
             generator.Generate();
             generator.Save("Avatar2");
